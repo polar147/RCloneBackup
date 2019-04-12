@@ -1,6 +1,6 @@
 # RCloneBackup
 
-A Reverse Incrementa Backup Script for RClone
+A Reverse Incremental Backup Script for RClone
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 
