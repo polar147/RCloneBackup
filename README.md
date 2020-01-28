@@ -11,4 +11,4 @@ A Reverse Incremental Backup Script for RClone.
 - VSS suport on Windows
 - Email report
 - Incremental backup
-- Cloud backup (check rclone https://rclone.org/)
+- Cloud backup (check rclone cloud support in https://rclone.org/)
