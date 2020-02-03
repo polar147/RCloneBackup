@@ -294,10 +294,10 @@ def RunTask(taskFile):
     error = 0
     Messages = []
     tableHTML=[]
-    Messages.append("Resume of the job:")
+    Messages.append("Resume of the job:" + '<br>')
     now = datetime.datetime.now()
     startTime= now
-    Messages.append("Started on: " + startTime.strftime('%d/%m/%Y %H:%M:%S'))
+    Messages.append("Started on: " + startTime.strftime('%d/%m/%Y %H:%M:%S') + '<br>')
     today = now.strftime('%Y-%m-%d-%H-%M-%S')
     taskSource = ""
     taskDestination = ""
@@ -327,7 +327,7 @@ def RunTask(taskFile):
 
     LastDataSent = GetTaskInfo(taskInfoDB, taskID, startTime)
 
-    WriteLog(logFile, "Started on: " + startTime.strftime('%d/%m/%Y %H:%M:%S'))
+    WriteLog(logFile, "Started on: " + startTime.strftime('%d/%m/%Y %H:%M:%S') + '<br>')
 
     #Initialize Shadow copy id table
     if str(platform.system()).upper() == "WINDOWS":
@@ -366,7 +366,7 @@ def RunTask(taskFile):
     #if no error start send data processs
     if error == 0:
         folders = taskFolders.split('|')
-        tableHTML.append('<br><table id="data"><tr><th>Folder</th><th>Status</th></tr>')
+        Messages.append('<br><table id="data"><tr><th>Folder</th><th>Status</th></tr>')
         for folder in folders:
             WriteLog(logFile, "=============================================================================")
             WriteLog(logFile, now.strftime('%Y/%m/%d %H:%M:%S') +  " Synchronizing " + str(folder))
@@ -462,10 +462,10 @@ def RunTask(taskFile):
             if VSSPath is not None:
                 VSSUnmount(str(Path(VSSPath)))
 
-            # create html  table  tasks result for email body
-            for line in tableHTML:
-                thtml = thtml + line
 
+    # create html table tasks result for email body
+    for line in tableHTML:
+        Messages.append(line)
 
     Messages.append(thtml + '</table>')
 
@@ -477,23 +477,23 @@ def RunTask(taskFile):
 
     if error == 0:
         backupStatus = 'Status: Success'
-        Messages.append('<div style="color: blue"><b>General ' + backupStatus + '</b></div>')
+        Messages.append('<br><div style="color: blue"><b>General ' + backupStatus + '</b></div><br>')
     else:
         backupStatus = 'Status: Failure'
-        Messages.append('<div style="color: red"><b>General ' + backupStatus + '</b></div>')
+        Messages.append('<br><div style="color: red"><b>General ' + backupStatus + '</b></div><br>')
 
     subject = str(taskName).upper() + "|" + backupStatus
     endTime = datetime.datetime.now()
     elapsedTime = endTime - startTime
 
-    Messages.append("<b>Started on:</b> " + startTime.strftime('%d/%m/%Y %H:%M:%S'))
-    Messages.append("<b>Finished on:</b> " + endTime.strftime('%d/%m/%Y %H:%M:%S'))
-    Messages.append("<b>Time elapsed:</b> " + str(elapsedTime))
+    Messages.append("<b>Started on:</b> " + startTime.strftime('%d/%m/%Y %H:%M:%S') + '<br>')
+    Messages.append("<b>Finished on:</b> " + endTime.strftime('%d/%m/%Y %H:%M:%S') + '<br>')
+    Messages.append("<b>Time elapsed:</b> " + str(elapsedTime) + '<br>')
 
     #prepare email to send
     emailContent = '<html><head>' + css + '</head><body><div style="font-family: Verdana; font-size: 12px;">'
     for line in Messages:
-        emailContent = emailContent + line + "<br>"
+        emailContent = emailContent + line
     emailContent = emailContent + "</div></body></html>"
 
     #send email
