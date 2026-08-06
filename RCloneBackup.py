@@ -239,7 +239,7 @@ def SendEmail(email_server,email_port,from_addr,password,to_addr,subject,content
         server = smtplib.SMTP(email_server, email_port)
         server.login(from_addr, password)
         server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
-        return("The e-mail was sent sucesfuly.")
+        return("The e-mail was sent successfully.")
     except smtplib.SMTPAuthenticationError:
         return("The username or password is incorrect.")
 
